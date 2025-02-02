@@ -12,10 +12,10 @@ const ExchangeRatesScreen: React.FC = () => {
   if (loading) return <ActivityIndicator size="large" style={styles.loader} />;
   if (error) return <Text style={styles.error}>{error}</Text>;
 
-  const currencies = Object.keys(rates || {}).map((currency) => ({
+  const currencies = rates ? Object.keys(rates).map((currency) => ({
     currency,
-    rate: rates ? rates[currency] : 0,
-  }));
+    rate: rates[currency],
+  })) : [];
 
   return (
     <View style={styles.container}>
@@ -35,7 +35,7 @@ const ExchangeRatesScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20},
+  container: { flex: 1, padding: 20 },
   loader: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   error: { textAlign: 'center', fontSize: 18, color: 'red', marginTop: 20 },
 });
