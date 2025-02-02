@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import axios from 'axios';
+// @ts-ignore
 import { FIXER_API_KEY } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

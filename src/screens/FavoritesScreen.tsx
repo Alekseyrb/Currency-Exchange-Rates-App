@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 import CurrencyCard from '../components/CurrencyCard';
 import { useExchange } from '../context/ExchangeContext';
-import { Text } from 'react-native-paper';
 
 const FavoritesScreen: React.FC = () => {
   const { favorites, toggleFavorite } = useExchange();
@@ -23,6 +23,7 @@ const FavoritesScreen: React.FC = () => {
               onPress={() => toggleFavorite(item.currency, item.rate)}
             />
           )}
+          contentContainerStyle={styles.listContent} // Добавлен отступ и центрирование
         />
       )}
     </View>
@@ -30,8 +31,21 @@ const FavoritesScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f4f4f9' },
-  emptyText: { textAlign: 'center', fontSize: 18, color: '#888', marginTop: 30 },
+  container: {
+    flex: 1,
+    backgroundColor: '#f4f4f9',
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#888',
+    marginTop: 30,
+  },
+  listContent: {
+    paddingBottom: 20,
+    paddingTop: 10,
+    paddingHorizontal: 10,
+  },
 });
 
 export default FavoritesScreen;

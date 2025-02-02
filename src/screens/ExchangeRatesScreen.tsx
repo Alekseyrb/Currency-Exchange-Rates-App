@@ -7,15 +7,19 @@ import useExchangeRates from '../hooks/useExchangeRates';
 
 const ExchangeRatesScreen: React.FC = () => {
   const { rates, loading, error } = useExchangeRates();
-  const { toggleFavorite } = useExchange();
+  const { favorites, toggleFavorite } = useExchange();
 
   if (loading) return <ActivityIndicator size="large" style={styles.loader} />;
   if (error) return <Text style={styles.error}>{error}</Text>;
 
-  const currencies = rates ? Object.keys(rates).map((currency) => ({
+  const currencies = Object.keys(rates || {}).map((currency) => ({
     currency,
-    rate: rates[currency],
-  })) : [];
+    rate: rates ? rates[currency] : 0,
+  }));
+
+  const isFavorite = (currency: string) => {
+    return favorites.some((item) => item.currency === currency);
+  };
 
   return (
     <View style={styles.container}>
@@ -26,18 +30,37 @@ const ExchangeRatesScreen: React.FC = () => {
           <CurrencyCard
             currency={item.currency}
             rate={item.rate}
+            isFavorite={isFavorite(item.currency)}
             onPress={() => toggleFavorite(item.currency, item.rate)}
           />
         )}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  loader: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  error: { textAlign: 'center', fontSize: 18, color: 'red', marginTop: 20 },
+  container: {
+    flex: 1,
+    backgroundColor: '#f4f4f9',
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  error: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: 'red',
+    marginTop: 20,
+  },
+  listContent: {
+    paddingBottom: 20,
+    paddingTop: 10,
+    paddingHorizontal: 10,
+  },
 });
 
 export default ExchangeRatesScreen;
