@@ -16,26 +16,14 @@ const CurrencyCard: React.FC<CurrencyCardProps> = ({
   isFavorite,
   onPress,
 }) => {
-  const getCurrencyColor = (currency: string) => {
-    switch (currency) {
-      case 'USD':
-        return COLORS.usd;
-      case 'EUR':
-        return COLORS.eur;
-      case 'GBP':
-        return COLORS.gbp;
-      default:
-        return COLORS.primary;
-    }
-  };
 
   return (
     <Card
-      style={[styles.card, {borderColor: getCurrencyColor(currency)}]}
+      style={[styles.card, {borderColor: COLORS.primary}]}
       elevation={5}>
       <Card.Content>
         <Text
-          style={[styles.currencyText, {color: getCurrencyColor(currency)}]}>
+          style={[styles.currencyText, {color: COLORS.primary}]}>
           {currency}
         </Text>
         <Text style={styles.rateText}>{rate} USD</Text>
@@ -44,7 +32,7 @@ const CurrencyCard: React.FC<CurrencyCardProps> = ({
           onPress={onPress}
           style={[
             styles.button,
-            {backgroundColor: isFavorite ? '#fff' : getCurrencyColor(currency)},
+            {backgroundColor: isFavorite ? '#fff' : COLORS.primary},
           ]}>
           {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
         </Button>
