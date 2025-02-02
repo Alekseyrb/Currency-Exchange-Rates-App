@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 import CurrencyCard from '../components/CurrencyCard';
 import { useExchange } from '../context/ExchangeContext';
-
-const exchangeRates = [
-  { currency: 'USD', rate: 1 },
-  { currency: 'EUR', rate: 0.85 },
-  { currency: 'GBP', rate: 0.75 },
-  { currency: 'JPY', rate: 110.25 },
-  { currency: 'AUD', rate: 1.35 },
-];
+import useExchangeRates from '../hooks/useExchangeRates';
 
 const ExchangeRatesScreen: React.FC = () => {
+  const { rates, loading, error } = useExchangeRates();
   const { toggleFavorite } = useExchange();
+
+  if (loading) return <ActivityIndicator size="large" style={styles.loader} />;
+  if (error) return <Text style={styles.error}>{error}</Text>;
+
+  const currencies = Object.keys(rates || {}).map((currency) => ({
+    currency,
+    rate: rates ? rates[currency] : 0,
+  }));
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={exchangeRates}
+        data={currencies}
         keyExtractor={(item) => item.currency}
         renderItem={({ item }) => (
           <CurrencyCard
@@ -32,7 +35,9 @@ const ExchangeRatesScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f4f4f9' },
+  container: { flex: 1, padding: 20},
+  loader: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  error: { textAlign: 'center', fontSize: 18, color: 'red', marginTop: 20 },
 });
 
 export default ExchangeRatesScreen;
