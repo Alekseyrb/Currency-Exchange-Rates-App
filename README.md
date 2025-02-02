@@ -1,97 +1,112 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Currency Exchange Rates App
 
-# Getting Started
+This is a **React Native** application that displays currency exchange rates. Users can view exchange rates, add favorite currencies, and access them offline.
+
+## Features
+
+✅ Display a list of currency exchange rates.
+✅ Add or remove specific rates to/from the favorites list.
+✅ Cache previously viewed exchange rates for offline access.
+✅ Handle API errors and ensure a smooth user experience.
+✅ Modular and maintainable codebase following best practices.
+✅ Secure storage of API keys.
+✅ Basic unit testing for core functionality.
+
+## Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Step 1: Install Dependencies
 
 ```sh
-# Using npm
-npm start
+npm install
+# OR
+yarn install
+```
 
-# OR using Yarn
+### Step 2: Start Metro
+
+Metro is the JavaScript build tool for React Native.
+
+```sh
+npm start
+# OR
 yarn start
 ```
 
-## Step 2: Build and run your app
+### Step 3: Build and Run Your App
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+#### Android
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
+# OR
 yarn android
 ```
 
-### iOS
+#### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+First, install CocoaPods dependencies:
 
 ```sh
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Then run:
 
 ```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
+# OR
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Project Structure
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```
+├── components/     # Reusable UI components
+├── context/        # Context API for global state management
+├── hooks/          # Custom hooks
+├── navigation/     # Navigation setup
+├── screens/        # Screens (ExchangeRatesScreen, FavoritesScreen)
+├── services/       # API services and business logic
+├── styles/         # Global styles and theme
+├── App.tsx         # Main app component
+```
 
-## Step 3: Modify your app
+## Main Dependencies:
 
-Now that you have successfully run the app, let's make changes!
+```
+- @react-native-async-storage/async-storage – for caching data locally to support offline mode.
+- @react-navigation/native & @react-navigation/bottom-tabs – for managing app navigation.
+- axios – for making HTTP requests to the API.
+- react-native-dotenv – for secure storage of sensitive data like API keys.
+- react-native-paper – for building modern UI components.
+- react-native-safe-area-context – to handle safe areas, especially on devices with notches.
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## API Integration
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+The app fetches exchange rates using the **Fixer.io API**.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- API Key is stored securely using environment variables (`@env`).
+- API response is cached in `AsyncStorage` for offline access.
+- On startup, the app loads the last cached rates if no internet is available.
 
-## Congratulations! :tada:
+## Offline Mode
 
-You've successfully run and modified your React Native App. :partying_face:
+- Exchange rates are saved locally using `AsyncStorage`.
+- If the device is offline, the app loads the last available exchange rates.
+- API requests are only made when necessary, reducing unnecessary network calls.
 
-### Now what?
+## Testing
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+The project includes basic unit tests for core functionality.
 
-# Troubleshooting
+### Running Tests
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+```sh
+npm test
+# OR
+yarn test
+```
