@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Card, Text, Button} from 'react-native-paper';
-import {COLORS} from '../styles/colors'; // Импортируем константы цветов
+import {COLORS} from '../styles/colors';
 
 interface CurrencyCardProps {
   currency: string;

@@ -40,7 +40,7 @@ export const ExchangeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         ? prev.filter((item) => item.currency !== currency)
         : [...prev, { currency, rate }];
 
-      saveFavorites(updatedFavorites); // Сохраняем новые избранные валюты
+      saveFavorites(updatedFavorites);
       return updatedFavorites;
     });
   };

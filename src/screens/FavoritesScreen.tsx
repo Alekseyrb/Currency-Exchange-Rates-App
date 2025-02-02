@@ -23,7 +23,7 @@ const FavoritesScreen: React.FC = () => {
               onPress={() => toggleFavorite(item.currency, item.rate)}
             />
           )}
-          contentContainerStyle={styles.listContent} // Добавлен отступ и центрирование
+          contentContainerStyle={styles.listContent}
         />
       )}
     </View>
