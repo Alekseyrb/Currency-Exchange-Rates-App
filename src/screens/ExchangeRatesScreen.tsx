@@ -21,19 +21,24 @@ const ExchangeRatesScreen: React.FC = () => {
     return favorites.some((item) => item.currency === currency);
   };
 
+  const renderCurrencyCard = ({ item }: { item: { currency: string; rate: number } }) => {
+    const isFav = isFavorite(item.currency);
+    return (
+      <CurrencyCard
+        currency={item.currency}
+        rate={item.rate}
+        isFavorite={isFav}
+        onPress={() => toggleFavorite(item.currency, item.rate)}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={currencies}
         keyExtractor={(item) => item.currency}
-        renderItem={({ item }) => (
-          <CurrencyCard
-            currency={item.currency}
-            rate={item.rate}
-            isFavorite={isFavorite(item.currency)}
-            onPress={() => toggleFavorite(item.currency, item.rate)}
-          />
-        )}
+        renderItem={renderCurrencyCard}
         contentContainerStyle={styles.listContent}
       />
     </View>

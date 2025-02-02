@@ -1,11 +1,25 @@
-import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import React, {useCallback} from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
+import {Text} from 'react-native-paper';
 import CurrencyCard from '../components/CurrencyCard';
-import { useExchange } from '../context/ExchangeContext';
+import {useExchange} from '../context/ExchangeContext';
 
 const FavoritesScreen: React.FC = () => {
-  const { favorites, toggleFavorite } = useExchange();
+  const {favorites, toggleFavorite} = useExchange();
+
+  const renderCurrencyCard = useCallback(
+    ({item}: {item: {currency: string; rate: number}}) => {
+      return (
+        <CurrencyCard
+          currency={item.currency}
+          rate={item.rate}
+          isFavorite
+          onPress={() => toggleFavorite(item.currency, item.rate)}
+        />
+      );
+    },
+    [toggleFavorite],
+  );
 
   return (
     <View style={styles.container}>
@@ -14,15 +28,8 @@ const FavoritesScreen: React.FC = () => {
       ) : (
         <FlatList
           data={favorites}
-          keyExtractor={(item) => item.currency}
-          renderItem={({ item }) => (
-            <CurrencyCard
-              currency={item.currency}
-              rate={item.rate}
-              isFavorite
-              onPress={() => toggleFavorite(item.currency, item.rate)}
-            />
-          )}
+          keyExtractor={item => item.currency}
+          renderItem={renderCurrencyCard}
           contentContainerStyle={styles.listContent}
         />
       )}
